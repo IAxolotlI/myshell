@@ -1,5 +1,6 @@
 #define STB_DA_IMPLEMENTATION
 #include "macro.h"
+#include "logger.h"
 
 #include "trie.h"
 #include <string.h>
@@ -17,7 +18,7 @@ struct TrieNode {
     struct TrieNode **items;
     struct TrieNode *parent;
     char *key;
-};
+}; //TODO: Separate aliases, builtin cmds and extern cmds
 
 struct TrieRoot {
     TrieNode* items[256];
@@ -208,7 +209,7 @@ ErrFind node_find_last(TrieNode* node, char **res, char *str) {
             node = node->items[node->max_sub_id_idx];
         }
         else {
-            assert("You found bug: max_sub_id_idx invalid");
+            LOG_BUG("max_sub_id_idx invalid");
             exit(1);
         }
         

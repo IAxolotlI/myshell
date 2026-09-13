@@ -59,9 +59,11 @@ void append_system_commands(TrieRoot *root) {
     trie_append(root, "unsetenv");
     trie_append(root, "env");
     trie_append(root, "exit");
+    trie_append(root, "jobs");
+    trie_append(root, "fg");
 }
 
-void generate_prompt() {
+void generate_prompt() { // TODO: Suck up config instead of this hardcoded shit
     char *prompt = (char*)calloc(DIR_SIZE, sizeof(char));
     char cwd[DIR_SIZE];
     getcwd(cwd, sizeof(cwd));
@@ -85,7 +87,7 @@ void generate_prompt() {
                 else break;
             }
         }
-        printf("%s%s@%s%s %s%s ❯%s ", COLOR_GREEN, user, COLOR_PURPLE, host, COLOR_MAGENTA, pos, COLOR_RESET);
+        printf("%s%s%s@%s%s %s%s ❯%s ", COLOR_GREEN, user, COLOR_RESET, COLOR_PURPLE, host, COLOR_MAGENTA, pos, COLOR_RESET);
     }
     else printf("%s%s@%s%s %s%s ❯%s ", COLOR_GREEN, user, COLOR_PURPLE, host, COLOR_MAGENTA, prompt, COLOR_RESET);
     fflush(stdout);
